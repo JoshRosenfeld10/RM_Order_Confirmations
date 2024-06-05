@@ -19,4 +19,13 @@ router.use((req, res, next) => {
   }
 });
 
+router.post(
+  "/",
+  bodyParser,
+  asyncHandler(async (req, res) => {
+    res.send(req.body);
+    res.sendStatus(200);
+  })
+);
+
 module.exports = router;
