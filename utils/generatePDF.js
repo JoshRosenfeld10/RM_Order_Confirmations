@@ -1,9 +1,8 @@
 const constants = require("../constants/constants");
-
-const API_SECRET = constants.pdfMonkeyToken;
+const pdfMonkey = require("../constants/pdfMonkey");
 
 /* 
-document_template_id: "8140AC56-E996-452B-9A0C-065E16F865F4",
+document_template_id: pdfMonkey.document_template_id,
 body: {
             Items: [
               {
@@ -29,21 +28,22 @@ body: {
           }
 */
 
-const generatePDF = async (document_template_id, body) => {
+const generatePDF = async (body, rowId) => {
   try {
     const res = await fetch("https://api.pdfmonkey.io/api/v1/documents", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${API_SECRET}`,
+        Authorization: `Bearer ${constants.pdfMonkeyToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         document: {
-          document_template_id: document_template_id,
+          document_template_id: pdfMonkey.document_template_id,
           status: "pending",
           payload: body,
           meta: {
             _filename: body["Order_ID"],
+            rowId: rowId,
           },
         },
       }),

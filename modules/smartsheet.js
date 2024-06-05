@@ -51,6 +51,18 @@ const smartsheet = () => {
         sheetId,
       });
     },
+    getAttachment: async (sheetId, attachmentId) => {
+      return await createClient().sheets.getAttachment({
+        sheetId,
+        attachmentId,
+      });
+    },
+    getRowAttachments: async (sheetId, rowId) => {
+      return await createClient().sheets.getRowAttachments({
+        sheetId,
+        rowId,
+      });
+    },
   };
 };
 
