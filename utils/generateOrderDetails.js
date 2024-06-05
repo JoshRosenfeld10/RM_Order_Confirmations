@@ -75,4 +75,4 @@ const generateOrderDetails = (sourceRow, orders) => {
   });
 };
 
-module.exports = generateOrderDetails();
+module.exports = generateOrderDetails;

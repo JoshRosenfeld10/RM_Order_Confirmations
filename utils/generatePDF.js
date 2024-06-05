@@ -55,4 +55,4 @@ const generatePDF = async (document_template_id, body) => {
   }
 };
 
-module.exports = generatePDF();
+module.exports = generatePDF;

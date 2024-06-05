@@ -5,4 +5,4 @@ const getCellByColumnName = (row, columnName, columnMap) => {
   });
 };
 
-module.exports = getCellByColumnName();
+module.exports = getCellByColumnName;

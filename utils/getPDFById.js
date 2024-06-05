@@ -21,4 +21,4 @@ const getPDFById = async (pdfId) => {
   }
 };
 
-module.exports = getPDFById();
+module.exports = getPDFById;
