@@ -1,7 +1,8 @@
 const express = require("express"),
   router = express.Router(),
   bodyParser = require("body-parser").json(),
-  uploadAttachment = require("../utils/uploadAttachment");
+  uploadAttachment = require("../utils/uploadAttachment"),
+  uploadQRCode = require("../utils/uploadQRCode");
 
 /**
    * Sample Request Body
@@ -27,6 +28,11 @@ const express = require("express"),
 router.post("/", bodyParser, async (req, res) => {
   const { filename, download_url: downloadUrl } = req.body.document;
   const { rowId } = JSON.parse(req.body.document.meta);
+
+  await uploadQRCode({
+    filename,
+    rowId,
+  });
 
   await uploadAttachment({
     downloadUrl,

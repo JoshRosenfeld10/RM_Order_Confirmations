@@ -63,6 +63,23 @@ const smartsheet = () => {
         rowId,
       });
     },
+    addImageToCell: async ({
+      sheetId,
+      rowId,
+      columnId,
+      fileSize,
+      fileName,
+      fileStream,
+    }) => {
+      return await createClient().sheets.addImageToCell({
+        sheetId,
+        rowId,
+        columnId,
+        fileSize,
+        fileName,
+        fileStream,
+      });
+    },
   };
 };
 
