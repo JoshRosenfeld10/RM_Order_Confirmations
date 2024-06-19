@@ -1,8 +1,12 @@
 const express = require("express"),
   router = express.Router(),
   bodyParser = require("body-parser").json(),
-  uploadAttachment = require("../utils/uploadAttachment"),
-  uploadQRCode = require("../utils/uploadQRCode");
+  uploadQRCode = require("../utils/uploadQRCode"),
+  sendEmail = require("../utils/sendEmail"),
+  smartsheet = require("../modules/smartsheet"),
+  apiTest = require("../constants/apiTest"),
+  axios = require("axios"),
+  { buffer } = require("node:stream/consumers");
 
 /**
    * Sample Request Body
@@ -28,17 +32,43 @@ const express = require("express"),
 router.post("/", bodyParser, async (req, res) => {
   const { filename, download_url: downloadUrl } = req.body.document;
   const { rowId } = JSON.parse(req.body.document.meta);
+  const orderId = filename.slice(0, -4);
+  const sheetId = apiTest.id;
 
   await uploadQRCode({
-    filename,
+    orderId,
     rowId,
   });
 
-  await uploadAttachment({
-    downloadUrl,
-    rowId,
-    filename,
-  });
+  // Download stream of PDF
+  axios({
+    url: downloadUrl,
+    method: "GET",
+    responseType: "stream",
+  })
+    .then(async (response) => {
+      // Add PDF order confirmation attachment to selected row
+      await smartsheet.addRowFileAttachment({
+        sheetId,
+        rowId,
+        fileStream: response.data,
+        fileSize: response.data.rawHeaders[response.data.rawHeaders.length - 1],
+        fileName: filename,
+      });
+      console.log("PDF attached successfully.");
+
+      // Send order confirmation email
+      const fileBuffer = await buffer(response.data);
+      await sendEmail({
+        orderId,
+        rowId,
+        filename,
+        fileBuffer,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
   res.sendStatus(200);
 });

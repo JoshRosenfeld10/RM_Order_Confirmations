@@ -1,3 +1,7 @@
+/**
+ * DEPRECATED
+ */
+
 const axios = require("axios"),
   FormData = require("form-data"),
   constants = require("../constants/constants"),

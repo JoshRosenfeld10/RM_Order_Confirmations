@@ -80,6 +80,21 @@ const smartsheet = () => {
         fileStream,
       });
     },
+    addRowFileAttachment: async ({
+      sheetId,
+      rowId,
+      fileSize,
+      fileName,
+      fileStream,
+    }) => {
+      return await createClient().sheets.addRowFileAttachment({
+        sheetId,
+        rowId,
+        fileSize,
+        fileName,
+        fileStream,
+      });
+    },
   };
 };
 

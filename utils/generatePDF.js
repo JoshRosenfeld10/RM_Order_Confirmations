@@ -48,8 +48,8 @@ const generatePDF = async (body, rowId) => {
         },
       }),
     });
-    const data = await res.json();
-    console.log(data);
+    // const data = await res.json();
+    console.log("PDF generated successfully.");
   } catch (error) {
     console.error(error);
   }
