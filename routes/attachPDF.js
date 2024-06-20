@@ -47,18 +47,20 @@ router.post("/", bodyParser, async (req, res) => {
     responseType: "stream",
   })
     .then(async (response) => {
+      // Create buffer of PDF
+      const fileBuffer = await buffer(response.data);
+
       // Add PDF order confirmation attachment to selected row
       await smartsheet.addRowFileAttachment({
         sheetId,
         rowId,
-        fileStream: response.data,
+        fileStream: fileBuffer,
         fileSize: response.data.rawHeaders[response.data.rawHeaders.length - 1],
         fileName: filename,
       });
       console.log("PDF attached successfully.");
 
       // Send order confirmation email
-      const fileBuffer = await buffer(response.data);
       await sendEmail({
         orderId,
         rowId,
