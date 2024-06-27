@@ -12,7 +12,11 @@ const readyForAttachment = async (sheetId, rowId) => {
   const orderId = row.cells[orderIdArrayIndex].value;
   const { data: attachments } = await smartsheet.getAttachments(sheetId);
   for (const attachment of attachments) {
-    if (attachment.name === `${orderId}.pdf`) return false;
+    if (
+      attachment.name === `${orderId}.pdf` ||
+      attachment.name === `${orderId}_PACKING_SLIP.pdf`
+    )
+      return false;
   }
 
   return true;

@@ -64,14 +64,17 @@ router.post(
     // Generate Order Details
     const { rows, columns } = await smartsheet.getSheet(sheetId);
     const inputtedRow = await smartsheet.getRow(sheetId, rowId);
-    const orderDetails = generateOrderDetails({
+    const orderDetails = await generateOrderDetails({
       sheetRows: rows,
       sheetColumns: columns,
       inputtedRow,
     });
 
-    // Generate PDF
-    await generatePDF(orderDetails, rowId);
+    // Generate Order Confirmation PDF
+    await generatePDF(orderDetails, rowId, "order_confirmation");
+
+    // Generate Packing Slip PDF
+    await generatePDF(orderDetails, rowId, "packing_slip");
 
     res.sendStatus(200);
   })

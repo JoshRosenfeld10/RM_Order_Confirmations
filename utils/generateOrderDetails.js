@@ -1,3 +1,5 @@
+const getQRCodeDataUri = require("./getQRCodeDataUri");
+
 const generateColumnMap = (sheetColumns) => {
   let columnMap = {};
   sheetColumns.forEach((column) => {
@@ -55,11 +57,12 @@ const generateRowDetails = (sourceRow, order, columnMap) => {
     order["Ship_to_Address"] = shipToAddress;
     order["Order_ID"] = orderId;
     order["Email"] = email;
-    order["PO#"] = PO;
+    order["PO"] = PO;
     order["Business_Name"] = businessName;
     order["Shipping_Contact_Name"] = shippingContactName;
     order["Shipping_Contact_Phone_Number"] = shippingContactPhoneNumber;
     order["Submission_Date"] = submissionDate;
+    order["Total_Boxes"] = 0;
   }
 
   const productId = getCellByColumnName(
@@ -89,18 +92,25 @@ const generateRowDetails = (sourceRow, order, columnMap) => {
     "Part Description": description,
     Quantity: quantity,
   });
+  order["Total_Boxes"] = order["Total_Boxes"] += parseInt(quantity);
 };
 
-const generateOrderDetails = ({ sheetRows, sheetColumns, inputtedRow }) => {
-  let order = {
-    Items: [],
-  };
+const generateOrderDetails = async ({
+  sheetRows,
+  sheetColumns,
+  inputtedRow,
+}) => {
   const columnMap = generateColumnMap(sheetColumns);
   const orderId = getCellByColumnName(
     inputtedRow,
     "Order ID",
     columnMap
   ).displayValue;
+  const qrCodeDataUri = await getQRCodeDataUri(orderId);
+  let order = {
+    Items: [],
+    QR_Code_URI: qrCodeDataUri,
+  };
 
   sheetRows.forEach((row) => {
     if (

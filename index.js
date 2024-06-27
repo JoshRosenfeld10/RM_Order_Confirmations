@@ -2,7 +2,8 @@ const express = require("express"),
   sheets = require("./routes/sheets"),
   webhooks = require("./routes/webhooks"),
   generatePDF = require("./routes/generatePDF"),
-  attachPDF = require("./routes/attachPDF"),
+  attachOrderConfirmationPDF = require("./routes/attachOrderConfirmationPDF"),
+  attachPackingSlipPDF = require("./routes/attachPackingSlipPDF"),
   constants = require("./constants/constants"),
   config = require("./modules/config"),
   port = config.port || 3000,
@@ -14,7 +15,8 @@ if (constants.local) {
 }
 
 app.use("/generatePDF", generatePDF);
-app.use("/attachPDF", attachPDF);
+app.use("/attachOrderConfirmationPDF", attachOrderConfirmationPDF);
+app.use("/attachPackingSlipPDF", attachPackingSlipPDF);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

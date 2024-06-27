@@ -28,7 +28,17 @@ body: {
           }
 */
 
-const generatePDF = async (body, rowId) => {
+const pdfTemplates = {
+  order_confirmation: pdfMonkey.order_confirmation_template_id,
+  packing_slip: pdfMonkey.packing_slip_template_id,
+};
+
+const generatePDF = async (body, rowId, template) => {
+  const fileNames = {
+    order_confirmation: body["Order_ID"],
+    packing_slip: `${body["Order_ID"]}_PACKING_SLIP`,
+  };
+
   try {
     const res = await fetch("https://api.pdfmonkey.io/api/v1/documents", {
       method: "POST",
@@ -38,18 +48,18 @@ const generatePDF = async (body, rowId) => {
       },
       body: JSON.stringify({
         document: {
-          document_template_id: pdfMonkey.document_template_id,
+          document_template_id: pdfTemplates[template],
           status: "pending",
           payload: body,
           meta: {
-            _filename: body["Order_ID"],
+            _filename: fileNames[template],
             rowId: rowId,
           },
         },
       }),
     });
     // const data = await res.json();
-    console.log("PDF generated successfully.");
+    console.log(`${template} PDF generated successfully.`);
   } catch (error) {
     console.error(error);
   }

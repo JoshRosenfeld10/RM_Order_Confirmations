@@ -58,7 +58,7 @@ router.post("/", bodyParser, async (req, res) => {
         fileSize: response.data.rawHeaders[response.data.rawHeaders.length - 1],
         fileName: filename,
       });
-      console.log("PDF attached successfully.");
+      console.log("Order Confirmation PDF attached successfully.");
 
       // Send order confirmation email
       await sendEmail({
