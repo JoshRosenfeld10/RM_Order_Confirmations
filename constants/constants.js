@@ -1,7 +1,7 @@
 const config = require("../modules/config");
 
 const constants = {
-  local: true,
+  local: false,
   gcpProject: "rm-order-management",
   smartsheetToken: config.smartsheetToken,
   pdfMonkeyToken: config.pdfMonkeyToken,

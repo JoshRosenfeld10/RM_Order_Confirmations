@@ -2,8 +2,8 @@ const smartsheet = require("../modules/smartsheet");
 
 const readyForAttachment = async (sheetId, rowId) => {
   // Check In-Queue status
-  const inQueueArrayIndex = 12; // TODO: change when migrating sheets
-  const orderIdArrayIndex = 0;
+  const inQueueArrayIndex = 21;
+  const orderIdArrayIndex = 2;
 
   const row = await smartsheet.getRow(sheetId, rowId);
   if (row.cells[inQueueArrayIndex].value) return false;

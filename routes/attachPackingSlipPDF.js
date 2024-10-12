@@ -2,7 +2,7 @@ const express = require("express"),
   router = express.Router(),
   bodyParser = require("body-parser").json(),
   smartsheet = require("../modules/smartsheet"),
-  apiTest = require("../constants/apiTest"),
+  rmOrderDetails = require("../constants/rmOrderDetails"),
   axios = require("axios"),
   { buffer } = require("node:stream/consumers");
 
@@ -28,7 +28,7 @@ const express = require("express"),
 router.post("/", bodyParser, async (req, res) => {
   const { filename, download_url: downloadUrl } = req.body.document;
   const { rowId } = JSON.parse(req.body.document.meta);
-  const sheetId = apiTest.id;
+  const sheetId = rmOrderDetails.id;
 
   // Download stream of PDF
   axios({

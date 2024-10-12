@@ -4,7 +4,7 @@ const express = require("express"),
   uploadQRCode = require("../utils/uploadQRCode"),
   sendEmail = require("../utils/sendEmail"),
   smartsheet = require("../modules/smartsheet"),
-  apiTest = require("../constants/apiTest"),
+  rmOrderDetails = require("../constants/rmOrderDetails"),
   axios = require("axios"),
   { buffer } = require("node:stream/consumers");
 
@@ -33,7 +33,7 @@ router.post("/", bodyParser, async (req, res) => {
   const { filename, download_url: downloadUrl } = req.body.document;
   const { rowId } = JSON.parse(req.body.document.meta);
   const orderId = filename.slice(0, -4);
-  const sheetId = apiTest.id;
+  const sheetId = rmOrderDetails.id;
 
   await uploadQRCode({
     orderId,

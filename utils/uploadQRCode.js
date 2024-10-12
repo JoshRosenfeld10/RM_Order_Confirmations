@@ -1,10 +1,10 @@
 const axios = require("axios"),
-  apiTest = require("../constants/apiTest"),
+  rmOrderDetails = require("../constants/rmOrderDetails"),
   smartsheet = require("../modules/smartsheet");
 
 const uploadQRCode = async ({ rowId, orderId }) => {
-  const sheetId = apiTest.id;
-  const columnId = apiTest.QRCodeId;
+  const sheetId = rmOrderDetails.id;
+  const columnId = rmOrderDetails.QRCodeId;
 
   axios({
     url: `http://api.qrserver.com/v1/create-qr-code/?data=${orderId}&size=150x150`,

@@ -1,15 +1,15 @@
 const { Resend } = require("resend"),
   constants = require("../constants/constants"),
   smartsheet = require("../modules/smartsheet"),
-  apiTest = require("../constants/apiTest");
+  rmOrderDetails = require("../constants/rmOrderDetails");
 
 const resend = new Resend(constants.resendToken);
 
 const sendEmail = async ({ orderId, rowId, filename, fileBuffer }) => {
-  const sheetId = apiTest.id;
+  const sheetId = rmOrderDetails.id;
 
   const { cells: rowCells } = await smartsheet.getRow(sheetId, rowId);
-  const toEmails = rowCells[apiTest.emailColumnIndex].displayValue
+  const toEmails = rowCells[rmOrderDetails.emailColumnIndex].displayValue
     .replace(/ /g, "")
     .split(",");
 

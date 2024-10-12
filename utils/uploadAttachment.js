@@ -5,10 +5,10 @@
 const axios = require("axios"),
   FormData = require("form-data"),
   constants = require("../constants/constants"),
-  apiTest = require("../constants/apiTest");
+  rmOrderDetails = require("../constants/rmOrderDetails");
 
 const uploadAttachment = async ({ downloadUrl, rowId, filename }) => {
-  const sheetId = apiTest.id;
+  const sheetId = rmOrderDetails.id;
   const response = await axios({
     url: downloadUrl,
     method: "GET",
