@@ -45,23 +45,28 @@ const generateRowDetails = (sourceRow, order, columnMap) => {
     ).displayValue;
     const email = getCellByColumnName(
       sourceRow,
-      "Email",
+      "Tracking Emails",
       columnMap
     ).displayValue;
-    const submissionDate = getCellByColumnName(
-      sourceRow,
-      "Submission Date",
-      columnMap
-    ).value;
+    // const submissionDate = getCellByColumnName(
+    //   sourceRow,
+    //   "Submission Date",
+    //   columnMap
+    // ).value;
 
     order["Ship_to_Address"] = shipToAddress;
     order["Order_ID"] = orderId;
-    order["Email"] = email;
+    order["Email"] = email.replace(/ /g, "").split(",")[0];
+    console.log(order["Email"]);
     order["PO"] = PO;
     order["Business_Name"] = businessName;
     order["Shipping_Contact_Name"] = shippingContactName;
     order["Shipping_Contact_Phone_Number"] = shippingContactPhoneNumber;
-    order["Submission_Date"] = submissionDate;
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    order["Submission_Date"] = `${day}/${month}/${year}`;
     order["Total_Boxes"] = 0;
   }
 
@@ -82,7 +87,7 @@ const generateRowDetails = (sourceRow, order, columnMap) => {
   ).displayValue;
   const quantity = getCellByColumnName(
     sourceRow,
-    "Quantity",
+    "Order Qty",
     columnMap
   ).displayValue;
 
