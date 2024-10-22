@@ -45,6 +45,7 @@ router.post(
   "/",
   bodyParser,
   asyncHandler(async (req, res) => {
+    console.log(req.body);
     const sheetId = req.body.scopeObjectId;
     const { rowId, eventType } = req.body.events[0];
 
