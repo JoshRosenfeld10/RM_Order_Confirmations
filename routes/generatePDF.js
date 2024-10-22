@@ -47,10 +47,17 @@ router.post(
   asyncHandler(async (req, res) => {
     console.log(req.body);
     const sheetId = req.body.scopeObjectId;
-    const { rowId, eventType } = req.body.events[0];
+    const { rowId } = req.body.events[0];
+
+    let updateFlag = false;
+    req.body.events.forEach((event) => {
+      if (event.eventType === "updated") {
+        updateFlag = true;
+      }
+    });
 
     // If the webhook event is not an update event
-    if (eventType !== "updated") {
+    if (!updateFlag) {
       res.sendStatus(200);
       return;
     }
