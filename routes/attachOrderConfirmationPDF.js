@@ -2,7 +2,7 @@ const express = require("express"),
   router = express.Router(),
   bodyParser = require("body-parser").json(),
   uploadQRCode = require("../utils/uploadQRCode"),
-  sendEmail = require("../utils/sendEmail"),
+  sendEmailSMTP2Go = require("../utils/sendEmailSMTP2Go"),
   smartsheet = require("../modules/smartsheet"),
   rmOrderDetails = require("../constants/rmOrderDetails"),
   axios = require("axios"),
@@ -61,11 +61,11 @@ router.post("/", bodyParser, async (req, res) => {
       console.log("Order Confirmation PDF attached successfully.");
 
       // Send order confirmation email
-      await sendEmail({
+      await sendEmailSMTP2Go({
         orderId,
         rowId,
         filename,
-        fileBuffer,
+        downloadUrl,
       });
     })
     .catch((error) => {

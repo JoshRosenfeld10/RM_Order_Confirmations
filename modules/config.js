@@ -6,4 +6,5 @@ module.exports = {
   port: process.env.PORT,
   pdfMonkeyToken: process.env.PDFMONKEY_ACCESS_TOKEN,
   resendToken: process.env.RESEND_ACCESS_TOKEN,
+  smtp2GoApiKey: process.env.SMTP2GO_API_KEY,
 };

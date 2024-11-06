@@ -6,6 +6,7 @@ const constants = {
   smartsheetToken: config.smartsheetToken,
   pdfMonkeyToken: config.pdfMonkeyToken,
   resendToken: config.resendToken,
+  smtp2GoApiKey: config.smtp2GoApiKey,
 };
 
 module.exports = constants;
